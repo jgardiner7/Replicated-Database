@@ -1,0 +1,1 @@
+echo "host replication repuser 172.22.0.0/16 md5" >> /var/lib/postgresql/data/pg_hba.conf
