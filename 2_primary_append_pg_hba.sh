@@ -1,1 +1,2 @@
-echo "host replication repuser 172.22.0.0/16 md5" >> /var/lib/postgresql/data/pg_hba.conf
+psql --username="${POSTGRES_USER}" --dbname="${POSTGRES_DB}" -c "CREATE ROLE ${REP_USER} WITH REPLICATION LOGIN PASSWORD '${REP_USER_PASSWORD}';"
+echo "host replication ${REP_USER} 172.22.0.0/16 md5" >> /var/lib/postgresql/data/pg_hba.conf

@@ -11,9 +11,10 @@ services:
             POSTGRES_DB: ${PRIMARY_DB}
             POSTGRES_USER: ${PRIMARY_USER}
             POSTGRES_PASSWORD: ${PRIMARY_PASSWORD}
+            REP_USER: ${REP_USER}
+            REP_USER_PASSWORD: ${REP_USER_PASSWORD}
         volumes:
             - primary_data:/var/lib/postgresql/data
-            - ./1_primary_init_repuser.sql:/docker-entrypoint-initdb.d/1_primary_init_repuser.sql
             - ./2_primary_append_pg_hba.sh:/docker-entrypoint-initdb.d/2_primary_append_pg_hba.sh
         healthcheck:
             test: ["CMD", "pg_isready", "-U", primary_username, "-d", "primary_database"]
@@ -43,8 +44,8 @@ services:
         networks:
             - db_net
         environment:
-            POSTGRES_USER: ${STANDBY_USER}
-            POSTGRES_PASSWORD: ${STANDBY_PASSWORD}
+            POSTGRES_USER: ${REP_USER}
+            POSTGRES_PASSWORD: ${REP_USER_PASSWORD}
         volumes:
             - standby_data:/var/lib/postgresql/data
             - ./1_standby_setup.sh:/docker-entrypoint-initdb.d/1_standby_setup.sh

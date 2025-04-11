@@ -1,5 +1,4 @@
 import time
-import docker
 import os
 import psycopg
 import random
@@ -40,7 +39,7 @@ def is_ready(container_name="standby_db_instance", user="repuser", database="pri
         return False
     return True
 
-def wait_for_container(container_name="standby_db_instance", timeout=30):
+def wait_for_container(container_name="standby_db_instance", timeout=15):
     # Waits until the container with the given name is ready.  Will raise an error if it takes
     # longer than timeout seconds for the container to start up.  
     start = time.time()
@@ -116,7 +115,7 @@ def verify_sync(container_name="standby_db_instance", timeout=5):
                 SELECT COUNT(*) FROM numbers;
             """)
             rows = cur.fetchall()[0][0]
-            print("Number of rows:")
+            print("Number of rows in the synchronized database:")
             print(rows)
             if rows == 100:
                 print("The standby server synchronized correctly!")
