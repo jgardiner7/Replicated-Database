@@ -15,7 +15,7 @@ services:
             REP_USER_PASSWORD: ${REP_USER_PASSWORD}
         volumes:
             - primary_data:/var/lib/postgresql/data
-            - ./2_primary_append_pg_hba.sh:/docker-entrypoint-initdb.d/2_primary_append_pg_hba.sh
+            - ./primary_init.sh:/docker-entrypoint-initdb.d/primary_init.sh
         healthcheck:
             test: ["CMD", "pg_isready", "-U", primary_username, "-d", "primary_database"]
             interval: 5s
