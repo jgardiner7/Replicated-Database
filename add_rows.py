@@ -24,8 +24,7 @@ def start_containers():
     subprocess.run(["docker-compose", "-f", compose_file, "up", "-d"], check=True)
 
 def is_ready(container_name="standby_db_instance", user="repuser", database="primary_database"):
-    # This function takes in the name of a PostgreSQL container and uses the pg_isready function
-    # to see if it is ready.  
+    # This function takes in the name of a PostgreSQL container and checks to see if it is ready.  
     try:
         with psycopg.connect(host="localhost",
                             port="5433",
@@ -39,7 +38,7 @@ def is_ready(container_name="standby_db_instance", user="repuser", database="pri
         return False
     return True
 
-def wait_for_container(container_name="standby_db_instance", timeout=15):
+def wait_for_container(container_name="standby_db_instance", timeout=20):
     # Waits until the container with the given name is ready.  Will raise an error if it takes
     # longer than timeout seconds for the container to start up.  
     start = time.time()
